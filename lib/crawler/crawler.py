@@ -4,7 +4,7 @@ Developer: Sheikh Sabbir
 Version: 1.0 Final
 '''
 import requests
-from lib.helper.Log import *
+from lib.helper.log import *  # <- ছোট হাতের log
 from lib.helper.helper import *
 from lib.core import *
 from bs4 import BeautifulSoup
