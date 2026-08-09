@@ -5,8 +5,9 @@ Version: 1.0 Final
 '''
 import json
 import requests
-from lib.helper.Log import *
+from lib.helper.log import *  # <- ছোট হাতের log
 import re
+from urllib.parse import urljoin
 
 # ============ Color Codes ============
 W = "\033[93m"
