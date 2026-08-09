@@ -7,7 +7,7 @@ import requests
 from random import randint
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
-from lib.helper.Log import *
+from lib.helper.log import *  # <- ছোট হাতের log
 from lib.helper.helper import *
 import warnings
 warnings.filterwarnings("ignore")
