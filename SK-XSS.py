@@ -6,26 +6,10 @@ License: MIT
 '''
 import argparse
 from lib.helper.helper import *
-from lib.helper.log import *
+from lib.helper.Log import *
 from lib.core import *
 from random import randint
 from lib.crawler.crawler import *
-
-# ============ SK XSS BANNER ============
-SK_BANNER = r"""
-   _____  _    __     __  _____   _____   _____ 
-  / ____|| |   \ \   / / |  __ \ / ____| / ____|
- | (___  | |    \ \_/ /  | |__) | (___  | (___  
-  \___ \ | |     \   /   |  _  /  \___ \  \___ \ 
-  ____) || |____  | |    | | \ \  ____) | ____) |
- |_____/ |______| |_|    |_|  \_\|_____/ |_____/ 
-                                                   
-         SK XSS - Advanced XSS Scanner
-         Developer: Sheikh Sabbir
-         Version: 1.0 Final
-         "Security is not a product, it's a process"
-"""
-# ==========================================
 
 epilog = """
 SK XSS - Advanced XSS Vulnerability Scanner
@@ -34,17 +18,17 @@ Version: 1.0 Final
 """
 
 def check(getopt):
-    payload = int(getopt.payload_level) if getopt.payload_level else 6
-    if payload > 6 and getopt.payload is None:
+    payload_level = int(getopt.payload_level) if getopt.payload_level else 6
+    if payload_level > 6 and getopt.payload is None:
         Log.info("Do you want use custom payload (Y/n)?")
-        answer = input("> " + W)
+        answer = input("> ")
         if answer.lower().strip() == "y":
             Log.info("Write the XSS payload below")
-            payload = input("> " + W)
+            payload = input("> ")
         else:
             payload = core.generate(randint(1, 6))
     else:
-        payload = core.generate(payload)
+        payload = core.generate(payload_level)
     return payload if getopt.payload is None else getopt.payload
 
 def start():
@@ -62,15 +46,15 @@ def start():
     pos_opt.add_argument("--payload-level", metavar="", help="Level for payload Generator, 7 for custom payload. {1...6}. Default: 6", default=6)
     pos_opt.add_argument("--payload", metavar="", help="Load custom payload directly (e.g. <script>alert(2005)</script>)", default=None)
     pos_opt.add_argument("--method", metavar="", help="Method setting(s): \n\t0: GET\n\t1: POST\n\t2: GET and POST (default)", default=2, type=int)
-    pos_opt.add_argument("--user-agent", metavar="", help="Request user agent (e.g. Chrome/2.1.1/...)", default=agent)
+    pos_opt.add_argument("--user-agent", metavar="", help="Request user agent", default="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
     pos_opt.add_argument("--single", metavar="", help="Single scan. No crawling just one address")
-    pos_opt.add_argument("--proxy", default=None, metavar="", help="Set proxy (e.g. {'https':'https://10.10.1.10:1080'})")
+    pos_opt.add_argument("--proxy", default=None, metavar="", help="Set proxy (e.g. https://10.10.1.10:1080)")
     pos_opt.add_argument("--about", action="store_true", help="Print information about SK XSS tool")
-    pos_opt.add_argument("--cookie", help="Set cookie (e.g {'ID':'1094200543'})", default='''{"ID":"1094200543"}''', metavar="")
+    pos_opt.add_argument("--cookie", help="Set cookie (e.g 'ID=1094200543')", default="", metavar="")
 
     getopt = parse.parse_args()
 
-    print(SK_BANNER)
+    print_banner()
     Log.info("Starting SK XSS...")
 
     if getopt.u:
